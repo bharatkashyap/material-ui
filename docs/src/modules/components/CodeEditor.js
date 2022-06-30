@@ -5,19 +5,29 @@ import Box from '@mui/material/Box';
 import { visuallyHidden } from '@mui/utils';
 import { styled } from '@mui/material/styles';
 import prism from '@mui/markdown/prism';
-import MarkdownElement from 'docs/src/modules/components/MarkdownElement';
+import { blue, blueDark } from 'docs/src/modules/brandingTheme';
 import { useTranslate } from 'docs/src/modules/utils/i18n';
 
-const Wrapper = styled(MarkdownElement)(({ theme }) => ({
+const Wrapper = styled('div')(({ theme }) => ({
   position: 'relative',
   padding: 0,
   marginBottom: theme.spacing(1),
   marginTop: theme.spacing(2),
+  backgroundColor: blueDark[800],
+  colorScheme: 'dark',
+  direction: 'ltr',
+  borderRadius: theme.shape.borderRadius,
+  border: '1px solid',
+  borderColor: blueDark[700],
+  overflow: 'auto',
+  WebkitOverflowScrolling: 'touch',
+  maxWidth: 'calc(100vw - 32px)',
   [theme.breakpoints.up('sm')]: {
     marginTop: theme.spacing(0),
   },
   borderRadius: theme.shape.borderRadius,
   outlineOffset: '-1px',
+  maxHeight: 'min(68vh, 1000px)',
   '&:hover': {
     outline: `2px solid ${
       theme.palette.mode === 'dark' ? theme.palette.primaryDark['500'] : theme.palette.primary.light
@@ -27,11 +37,6 @@ const Wrapper = styled(MarkdownElement)(({ theme }) => ({
     outline: `2px solid ${
       theme.palette.mode === 'dark' ? theme.palette.primaryDark.main : theme.palette.primary.main
     }`,
-  },
-  '& > pre': {
-    margin: '0 auto',
-    padding: 0,
-    maxHeight: 'min(48vh, 600px)',
   },
 }));
 
@@ -93,14 +98,12 @@ const CodeEditor = ({ language = 'jsx', onChange, ...rest }) => {
         }
       }}
     >
-      <pre>
-        <StyledEditor
-          padding={20}
-          highlight={(code) => prism(code, language)}
-          {...rest}
-          onValueChange={onChange}
-        />
-      </pre>
+      <StyledEditor
+        padding={20}
+        highlight={(code) => prism(code, language)}
+        {...rest}
+        onValueChange={onChange}
+      />
       <Box
         tabIndex={0}
         sx={{
